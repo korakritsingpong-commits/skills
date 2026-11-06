@@ -90,10 +90,6 @@ Off the main flow entirely.
 - **`/teach`**: learn a concept over multiple sessions, using the current directory as a stateful workspace.
 - **`/writing-for-agents`** is the reference for writing documents agents consume: skills, AGENTS.md, pointed-at docs.
 
-## Knowledge wiki (beta)
-
-- **`/ideacard`**: build an LLM wiki by creating a schema 3.0 question card before research, answering the same card with traceable evidence, rendering Markdown, then deriving fundamental follow-up question cards. Use it for a connected body of knowledge across any subject; use `/research` for a standalone cited investigation. This skill lives in `skills/in-progress/ideacard`, is model- or user-invoked, and is installed directly rather than shipped in the plugin. Its scripts require Python 3.10+ and Pydantic 2.
-
 ## Precondition
 
 **`/setup-matt-pocock-skills`**: run before your first engineering flow to configure the issue tracker, triage labels, and doc layout the other skills assume. Custom issue trackers also work.
