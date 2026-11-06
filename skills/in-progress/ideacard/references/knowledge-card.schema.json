@@ -1,0 +1,573 @@
+{
+  "$defs": {
+    "CardRelation": {
+      "additionalProperties": false,
+      "properties": {
+        "target_card_id": {
+          "title": "Target Card Id",
+          "type": "string"
+        },
+        "relation": {
+          "enum": [
+            "ขยายความ",
+            "เป็นส่วนหนึ่งของ",
+            "ต้องเข้าใจก่อน",
+            "เปรียบเทียบกับ",
+            "โต้แย้ง",
+            "นำไปใช้กับ",
+            "แทนที่",
+            "เกี่ยวข้องกับ"
+          ],
+          "title": "Relation",
+          "type": "string"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "target_card_id",
+        "relation"
+      ],
+      "title": "CardRelation",
+      "type": "object"
+    },
+    "Claim": {
+      "additionalProperties": false,
+      "properties": {
+        "claim_id": {
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "statement": {
+          "title": "Statement",
+          "type": "string"
+        },
+        "claim_type": {
+          "enum": [
+            "นิยาม",
+            "ข้อเท็จจริง",
+            "ข้อวิเคราะห์",
+            "สมมติฐาน",
+            "ข้อเสนอแนะ"
+          ],
+          "title": "Claim Type",
+          "type": "string"
+        },
+        "evidence_status": {
+          "enum": [
+            "มีหลักฐานสนับสนุน",
+            "มีหลักฐานขัดแย้ง",
+            "หลักฐานยังไม่เพียงพอ",
+            "ยังไม่ได้ตรวจสอบ",
+            "ไม่ใช่ข้อกล่าวอ้างเชิงประจักษ์"
+          ],
+          "title": "Evidence Status",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "reasoning": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reasoning"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "claim_id",
+        "statement",
+        "claim_type",
+        "evidence_status"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
+    "DetailItem": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Claim Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "label",
+        "value"
+      ],
+      "title": "DetailItem",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "locator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Locator"
+        },
+        "excerpt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Excerpt"
+        },
+        "relation": {
+          "enum": [
+            "สนับสนุน",
+            "โต้แย้ง",
+            "ให้บริบท"
+          ],
+          "title": "Relation",
+          "type": "string"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "source_id",
+        "relation"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "KnowledgeCard": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "3.0",
+          "default": "3.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "card_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]*$",
+          "title": "Card Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "card_type": {
+          "enum": [
+            "นิยาม",
+            "คำอธิบาย",
+            "วิธีทำ",
+            "การเปรียบเทียบ",
+            "ข้อค้นพบ",
+            "การตัดสินใจ",
+            "ไอเดีย",
+            "คำถามเปิด"
+          ],
+          "title": "Card Type",
+          "type": "string"
+        },
+        "primary_question": {
+          "title": "Primary Question",
+          "type": "string"
+        },
+        "short_answer": {
+          "title": "Short Answer",
+          "type": "string"
+        },
+        "answer_claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Answer Claim Ids",
+          "type": "array"
+        },
+        "topics": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Topics",
+          "type": "array"
+        },
+        "scope": {
+          "$ref": "#/$defs/KnowledgeScope"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/Claim"
+          },
+          "title": "Claims",
+          "type": "array"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/Source"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "open_questions": {
+          "items": {
+            "$ref": "#/$defs/OpenQuestion"
+          },
+          "title": "Open Questions",
+          "type": "array"
+        },
+        "relations": {
+          "items": {
+            "$ref": "#/$defs/CardRelation"
+          },
+          "title": "Relations",
+          "type": "array"
+        },
+        "extensions": {
+          "items": {
+            "$ref": "#/$defs/KnowledgeExtension"
+          },
+          "title": "Extensions",
+          "type": "array"
+        },
+        "review_status": {
+          "enum": [
+            "ร่าง",
+            "ตรวจสอบบางส่วน",
+            "ตรวจสอบตามขอบเขตแล้ว",
+            "ต้องทบทวน"
+          ],
+          "title": "Review Status",
+          "type": "string"
+        },
+        "reviewed_at": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewed At"
+        },
+        "review_triggers": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Review Triggers",
+          "type": "array"
+        }
+      },
+      "required": [
+        "card_id",
+        "title",
+        "card_type",
+        "primary_question",
+        "short_answer",
+        "answer_claim_ids",
+        "topics",
+        "scope",
+        "claims",
+        "sources",
+        "review_status"
+      ],
+      "title": "KnowledgeCard",
+      "type": "object"
+    },
+    "KnowledgeExtension": {
+      "additionalProperties": false,
+      "properties": {
+        "extension_type": {
+          "title": "Extension Type",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/DetailItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "extension_type",
+        "items"
+      ],
+      "title": "KnowledgeExtension",
+      "type": "object"
+    },
+    "KnowledgeScope": {
+      "additionalProperties": false,
+      "properties": {
+        "context": {
+          "title": "Context",
+          "type": "string"
+        },
+        "applies_to": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Applies To",
+          "type": "array"
+        },
+        "excludes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Excludes",
+          "type": "array"
+        },
+        "assumptions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Assumptions",
+          "type": "array"
+        },
+        "jurisdiction": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Jurisdiction"
+        },
+        "temporal_scope": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Temporal Scope"
+        }
+      },
+      "required": [
+        "context"
+      ],
+      "title": "KnowledgeScope",
+      "type": "object"
+    },
+    "OpenQuestion": {
+      "additionalProperties": false,
+      "properties": {
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "significance": {
+          "title": "Significance",
+          "type": "string"
+        },
+        "resolution_method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resolution Method"
+        }
+      },
+      "required": [
+        "question",
+        "significance"
+      ],
+      "title": "OpenQuestion",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "source_type": {
+          "enum": [
+            "เอกสาร",
+            "เว็บไซต์",
+            "งานวิจัย",
+            "ชุดข้อมูล",
+            "การสัมภาษณ์",
+            "การสังเกต/การทดลอง",
+            "บันทึกภายใน",
+            "อื่นๆ"
+          ],
+          "title": "Source Type",
+          "type": "string"
+        },
+        "creators": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Creators",
+          "type": "array"
+        },
+        "publisher": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Publisher"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        },
+        "resource_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resource Ref"
+        },
+        "published_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Published At"
+        },
+        "accessed_at": {
+          "format": "date",
+          "title": "Accessed At",
+          "type": "string"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        }
+      },
+      "required": [
+        "source_id",
+        "title",
+        "source_type",
+        "accessed_at"
+      ],
+      "title": "Source",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "cards": {
+      "items": {
+        "$ref": "#/$defs/KnowledgeCard"
+      },
+      "title": "Cards",
+      "type": "array"
+    }
+  },
+  "required": [
+    "cards"
+  ],
+  "title": "KnowledgeResponse",
+  "type": "object"
+}

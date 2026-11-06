@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ideacard"
+  short_description: "ตั้งคำถาม ค้นหลักฐาน และเชื่อมความรู้ใน LLM wiki"
+  default_prompt: "ใช้ $ideacard สร้างการ์ดคำถามตาม schema ก่อนค้นคำตอบ แล้วสร้างคำถามพื้นฐานต่อยอด"
